@@ -1,0 +1,28 @@
+ public override string DisplayName => "Fusty Fists";
+
+        public override string Description => "0-4-0 Upgrade";
+
+        public override int Cost => 0;
+
+        public override int Path => 1;
+
+        public override int Tier => 4;
+
+        public override void ApplyUpgrade(TowerModel towerModel)
+        {
+            var abilityModel = Game.instance.model.GetTower(TowerType.Alchemist, 0, 5).GetAbility().Duplicate();
+
+
+            var alchmorph = Game.instance.model.GetTower(TowerType.Alchemist, 0, 5).GetAbility().GetBehavior<MorphTowerModel>().Duplicate();
+
+            var morph = new MorphTowerModel("MorphModel", true, 9999999, " RoboMonkeyFanCLub", 20f, true, true,
+
+                null, Game.instance.model.GetTower(TowerType.PatFusty, 20),
+                alchmorph.effectModel, 3, 9999999f, 20, "DartMonkey",
+                alchmorph.effectOnTransitionBackModel,
+                alchmorph.resetOnDefeatScreen, alchmorph.ignoreWithMutators);
+
+            abilityModel.RemoveBehavior<MorphTowerModel>();
+            abilityModel.AddBehavior(morph);
+            towerModel.AddBehavior(abilityModel);
+        }
